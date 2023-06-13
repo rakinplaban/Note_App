@@ -14,6 +14,13 @@ import java.sql.PreparedStatement;
 public class Login {
 
     @FXML
+    private Stage primaryStage; // Declare the Stage reference
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    @FXML
     private Button registerAcc;
 
     @FXML
@@ -41,7 +48,7 @@ public class Login {
                 String p = password.getText();
                 statement.setString(1, u);
                 statement.setString(2, p);
-                statement.executeUpdate();
+                statement.executeQuery();
 
                 showAlert("Successfully login", "Login as "+u);
             }catch(Exception e){

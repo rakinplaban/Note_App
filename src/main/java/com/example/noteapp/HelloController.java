@@ -14,7 +14,11 @@ import java.sql.PreparedStatement;
 import java.io.IOException;
 
 public class HelloController {
-    private Stage primaryStage;
+    private Stage primaryStage; // Declare the Stage reference
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
     @FXML
     private Button registerAcc;
 
@@ -61,15 +65,23 @@ public class HelloController {
     protected void LoginOption() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-            Pane loginLayout = loader.load();
+            BorderPane loginLayout = loader.load();
             Scene loginScene = new Scene(loginLayout);
 
+            // Access the controller of the login.fxml file and pass the primaryStage reference
+            Login loginController = loader.getController();
+            loginController.setPrimaryStage(primaryStage);
+
             primaryStage.setScene(loginScene);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
+    protected void onLoginHyperlink() {
+        LoginOption(); // Call LoginOption() to switch to the login page
+    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

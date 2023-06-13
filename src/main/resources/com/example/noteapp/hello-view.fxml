@@ -53,7 +53,7 @@
                </font>
             </Button>
             <TextField fx:id="username" layoutX="-57.0" layoutY="92.0" prefHeight="31.0" prefWidth="243.0" promptText="User Name" />
-            <Hyperlink fx:id="loginoption" layoutX="46.0" layoutY="310.0" onAction="#LoginOption" text="Login" />
+            <Hyperlink fx:id="loginoption" layoutX="46.0" layoutY="310.0" onAction="#onLoginHyperlink" text="Login" />
          </children>
       </Pane>
    </right>
