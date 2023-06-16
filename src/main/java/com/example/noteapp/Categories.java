@@ -43,7 +43,7 @@ public class Categories {
             statement.setString(1, cat);
             statement.executeUpdate();
 
-                showAlert("Registration Successful", "User registered successfully!");
+            showAlert("Created Successful", "201 created!");
         }catch(Exception e){
             System.out.println("Connection failed.");
         }

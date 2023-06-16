@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.noteapp.ViewCategories">
+   <children>
+      <MenuBar fx:id="optionmenu" layoutX="200.0" layoutY="1.0">
+        <menus>
+          <Menu fx:id="viewnote" mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu fx:id="createnote" mnemonicParsing="false" text="Create">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu fx:id="takenote" mnemonicParsing="false" text="Take Notes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: orange;" />
+      <TableView fx:id="categorytab" layoutX="200.0" layoutY="26.0" prefHeight="373.0" prefWidth="400.0" AnchorPane.rightAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="catid" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="categoryname" maxWidth="60000.0" prefWidth="75.0" text="category_name" />
+            <TableColumn fx:id="created_date" prefWidth="75.0" text="Created_date" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
