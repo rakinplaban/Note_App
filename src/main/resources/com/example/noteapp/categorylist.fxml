@@ -28,12 +28,12 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: orange;" />
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #e85920;" />
       <TableView fx:id="categorytab" layoutX="200.0" layoutY="26.0" prefHeight="373.0" prefWidth="400.0" AnchorPane.rightAnchor="0.0">
         <columns>
-          <TableColumn fx:id="catid" prefWidth="75.0" text="id" />
-          <TableColumn fx:id="categoryname" maxWidth="60000.0" prefWidth="75.0" text="category_name" />
-            <TableColumn fx:id="created_date" prefWidth="75.0" text="Created_date" />
+          <TableColumn fx:id="id" prefWidth="64.00006103515625" text="id" />
+          <TableColumn fx:id="category_name" maxWidth="60000.0" prefWidth="186.39996337890625" text="category_name" />
+            <TableColumn fx:id="created_date" prefWidth="148.79998779296875" text="created_date" />
         </columns>
       </TableView>
    </children>
