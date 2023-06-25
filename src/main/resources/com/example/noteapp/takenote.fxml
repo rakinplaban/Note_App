@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,14 +11,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.noteapp.Takenote">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.noteapp.Takenote">
    <children>
       <Button fx:id="submit" layoutX="439.0" layoutY="343.0" mnemonicParsing="false" onAction="#createNote" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #e85920;" text="Submit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="category" layoutX="233.0" layoutY="296.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="230.0" layoutY="270.0" prefHeight="26.0" prefWidth="140.0" text="Category " textFill="#fa0a0a" />
       <Label layoutX="229.0" layoutY="114.0" prefHeight="26.0" prefWidth="98.0" text="Note *" textFill="#ec0c0c" />
       <Label layoutX="230.0" layoutY="25.0" prefHeight="58.0" prefWidth="118.0" text="Tittle *" textFill="#f40a0a" />
@@ -44,5 +43,6 @@
         </menus>
       </MenuBar>
       <TextArea fx:id="note" layoutX="231.0" layoutY="140.0" prefHeight="116.0" prefWidth="354.0" />
+      <ComboBox fx:id="category" layoutX="233.0" layoutY="296.0" onAction="#rootAnchorPaneInitialized" prefWidth="150.0" />
    </children>
 </AnchorPane>

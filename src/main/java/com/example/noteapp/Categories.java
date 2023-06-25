@@ -50,7 +50,9 @@ public class Categories {
         this.created_date = created_date;
     }
 
-
+//    public Categories(String category_name){
+//        this.category_name = category_name;
+//    }
     @FXML
     private TextField categoryid;
 
