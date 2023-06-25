@@ -21,7 +21,7 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu fx:id="takenote" mnemonicParsing="false" text="Take Notes">
+          <Menu fx:id="takenote" mnemonicParsing="false" onAction="#takeNoteOption" text="Take Notes">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
