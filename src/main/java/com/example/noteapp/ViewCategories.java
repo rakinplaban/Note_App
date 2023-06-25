@@ -1,13 +1,18 @@
 package com.example.noteapp;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -70,6 +75,23 @@ public class ViewCategories {
             connection.close();
         } catch(Exception e) {
             System.out.println("Connection failed.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void takeNoteOption(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("takenote.fxml"));
+            AnchorPane categoryLayout = loader.load();
+            Scene loginScene = new Scene(categoryLayout);
+
+            // Access the controller of the login.fxml file and pass the primaryStage reference
+            Takenote notepage = loader.getController();
+            notepage.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(loginScene);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
