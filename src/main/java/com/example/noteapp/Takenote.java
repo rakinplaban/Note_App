@@ -86,13 +86,14 @@ public class Takenote {
             String note_text = note.getText();
             statement.setString(2,note_text);
             statement.setInt(3,userId);
-
+            statement.setString(4, String.valueOf(category));
 
             statement.executeUpdate();
 
             showAlert("Created Successful", "201 created!");
         }catch(Exception e){
             System.out.println("Connection failed.");
+            showAlert("Error", "500 Internal Server Error");
         }
     }
 
