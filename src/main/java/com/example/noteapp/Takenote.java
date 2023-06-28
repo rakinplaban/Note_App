@@ -10,8 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
-import java.net.URL;
-import java.util.ResourceBundle;
+//import java.net.URL;
+//import java.util.ResourceBundle;
 
 import java.sql.*;
 
@@ -71,31 +71,41 @@ public class Takenote {
     }
 
     @FXML
-    public void createNote(){
+    public void createNote() {
         String url = "jdbc:mysql://localhost:3306/noteapp";
         String user = "root";
         String pass = "";
 
-        try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url,user,pass);
-            String sql = "insert into note(title,content,user_id,category_id) values (?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            String title_text = title.getText();
-            statement.setString(1, title_text);
-            String note_text = note.getText();
-            statement.setString(2,note_text);
-            statement.setInt(3,userId);
-            statement.setString(4, String.valueOf(category));
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            String categoryQuery = "SELECT id FROM category WHERE category_name = ?";
+            PreparedStatement categoryStatement = connection.prepareStatement(categoryQuery);
+            categoryStatement.setString(1, category.getValue());
+            ResultSet categoryResult = categoryStatement.executeQuery();
 
-            statement.executeUpdate();
+            if (categoryResult.next()) {
+                int categoryId = categoryResult.getInt("id");
+                String noteQuery = "INSERT INTO note (title, content, user_id, category_id) VALUES (?, ?, ?, ?)";
+                PreparedStatement noteStatement = connection.prepareStatement(noteQuery);
+                noteStatement.setString(1, title.getText());
+                noteStatement.setString(2, note.getText());
+                noteStatement.setInt(3, 1);
+                noteStatement.setInt(4, categoryId);
+                noteStatement.executeUpdate();
 
-            showAlert("Created Successful", "201 created!");
-        }catch(Exception e){
+                showAlert("Created Successful", "Note created successfully!");
+            } else {
+                showAlert("Error", "Failed to retrieve category ID.");
+            }
+        } catch (Exception e) {
             System.out.println("Connection failed.");
             showAlert("Error", "500 Internal Server Error");
         }
     }
+
+
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
