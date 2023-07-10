@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Login {
 
@@ -46,7 +47,7 @@ public class Login {
 
         if(username.getText().isBlank()==false && password.getText().isBlank()==false){
             try{
-                Class.forName("com.mysql.jdbc.Driver");
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url,user,pass);
                 String sql = "Select * from user where username=? and password=?";
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -54,27 +55,54 @@ public class Login {
                 String p = password.getText();
                 statement.setString(1, u);
                 statement.setString(2, p);
-                statement.executeQuery();
+                ResultSet resultSet=statement.executeQuery();
 
                 showAlert("Successfully login", "Login as "+u);
+//                if (resultSet.next()) {
+//                    int userId = resultSet.getInt("id");
+//                    String userName = resultSet.getString("username");
+//                    String password = resultSet.getString("password");
+//                    User auth_user = new User(userId, userName, password);
+//                }
+                if (resultSet.next()) {
+                    int userId = resultSet.getInt("id");
+                    String userName = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    User auth_user = new User(userId, userName, password);
+
+                    // Additional code to pass the authenticated user to the next scene or controller
+                    // For example, you can pass the authenticated user to the CategoriesController
+                    FXMLLoader noteFormLoader = new FXMLLoader(getClass().getResource("takenote.fxml"));
+                    AnchorPane noteFormLayout = noteFormLoader.load();
+                    Scene loginScene = new Scene(noteFormLayout);
+
+                    Takenote noteTakeController = noteFormLoader.getController();
+                    noteTakeController.setPrimaryStage(primaryStage);
+                    noteTakeController.setAuthenticatedUser(auth_user);
+
+                    primaryStage.setScene(loginScene);
+                } else {
+                    showAlert("Error", "Invalid username or password.");
+                }
 
             }catch(Exception e){
                 System.out.println("Connection failed.");
+                showAlert("Error 501", "Internal Server Error!");
             }
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
-                AnchorPane categoryLayout = loader.load();
-                Scene loginScene = new Scene(categoryLayout);
-
-                // Access the controller of the login.fxml file and pass the primaryStage reference
-                Categories categoriesController = loader.getController();
-                categoriesController.setPrimaryStage(primaryStage);
-
-                primaryStage.setScene(loginScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            /* Load category page. */
+//            try {
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
+//                AnchorPane categoryLayout = loader.load();
+//                Scene loginScene = new Scene(categoryLayout);
+//
+//                // Access the controller of the login.fxml file and pass the primaryStage reference
+//                Categories categoriesController = loader.getController();
+//                categoriesController.setPrimaryStage(primaryStage);
+//
+//                primaryStage.setScene(loginScene);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
