@@ -3,6 +3,8 @@ package com.example.noteapp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert;
@@ -21,6 +23,31 @@ public class Takenote {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+    private User authenticatedUser;
+
+    private String title_ ;
+    private String content_;
+
+    public String getTitle() {
+        return title_;
+    }
+
+    public void setTitle(String title_) {
+        this.title_ = title_;
+    }
+
+    public String getContent() {
+        return content_;
+    }
+
+    public void setContent(String content_) {
+        this.content_ = content_;
+    }
+
+    public void setAuthenticatedUser(User user) {
+        authenticatedUser = user;
+    }
     @FXML
     private ComboBox<String> category;
 
@@ -36,11 +63,6 @@ public class Takenote {
     @FXML
     private AnchorPane rootAnchorPane;
 
-    private int userId;
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     @FXML
     public void rootAnchorPaneInitialized() {
@@ -49,7 +71,7 @@ public class Takenote {
             String user = "root";
             String pass = "";
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, pass);
             String sql = "SELECT category_name FROM category";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -70,6 +92,14 @@ public class Takenote {
         rootAnchorPaneInitialized();
     }
 
+    public Takenote(){}
+
+    public Takenote(String title_, String content_) {
+        this.title_ = title_;
+        this.content_ = content_;
+    }
+
+
     @FXML
     public void createNote() {
         String url = "jdbc:mysql://localhost:3306/noteapp";
@@ -77,7 +107,7 @@ public class Takenote {
         String pass = "";
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, pass);
             String categoryQuery = "SELECT id FROM category WHERE category_name = ?";
             PreparedStatement categoryStatement = connection.prepareStatement(categoryQuery);
@@ -90,11 +120,22 @@ public class Takenote {
                 PreparedStatement noteStatement = connection.prepareStatement(noteQuery);
                 noteStatement.setString(1, title.getText());
                 noteStatement.setString(2, note.getText());
-                noteStatement.setInt(3, 1);
+                int userId = authenticatedUser.getId();
+                noteStatement.setInt(3, userId);
                 noteStatement.setInt(4, categoryId);
                 noteStatement.executeUpdate();
 
                 showAlert("Created Successful", "Note created successfully!");
+
+                FXMLLoader notelistLoader = new FXMLLoader(getClass().getResource("categorylist.fxml"));
+                AnchorPane notelistLayout = notelistLoader.load();
+                Scene listScene = new Scene(notelistLayout);
+
+                ViewCategories noteviewController = notelistLoader.getController();
+                noteviewController.setPrimaryStage(primaryStage);
+//                noteviewController.setAuthenticatedUser(auth_user);
+                primaryStage.setScene(listScene);
+
             } else {
                 showAlert("Error", "Failed to retrieve category ID.");
             }

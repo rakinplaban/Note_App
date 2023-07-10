@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.noteapp.Categories">
+   <children>
+      <MenuBar fx:id="menubar" layoutX="207.0" layoutY="1.0">
+        <menus>
+          <Menu fx:id="view" mnemonicParsing="false" onAction="#showCategories" text="View">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Create">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Take notes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TextField fx:id="categoryid" layoutX="300.0" layoutY="121.0" prefHeight="26.0" prefWidth="262.0" promptText="Category name" />
+      <Label layoutX="217.0" layoutY="125.0" prefHeight="18.0" prefWidth="55.0" text="Category" />
+      <Button fx:id="createbtn" layoutX="306.0" layoutY="200.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #e85920;" text="Create" textFill="#fcf9f9">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #e85920;" />
+   </children>
+</AnchorPane>

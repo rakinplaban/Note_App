@@ -26,21 +26,20 @@ public class ViewCategories {
         this.primaryStage = primaryStage;
     }
     @FXML
-    private TableView<Categories> categorytab;
+    private TableView<Takenote> categorytab;
 
     @FXML
-    private TableColumn<Categories, String> category_name;
+    private TableColumn<Takenote, String> title;
 
     @FXML
-    private TableColumn<Categories, Integer> id;
+    private TableColumn<Takenote, Integer> id;
 
     @FXML
-    private TableColumn<Categories, Date> created_date;
+    private TableColumn<Takenote, String> content;
 
     public void initialize() {
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        category_name.setCellValueFactory(new PropertyValueFactory<>("category_name"));
-        created_date.setCellValueFactory(new PropertyValueFactory<>("created_date"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        content.setCellValueFactory(new PropertyValueFactory<>("content"));
         viewCategories();
     }
 
@@ -51,21 +50,20 @@ public class ViewCategories {
         String pass = "";
 
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url,user,pass);
 
-            String sql = "SELECT * FROM category";
+            String sql = "SELECT title,content FROM note where user_id = 1";
 
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-            ObservableList<Categories> categories = FXCollections.observableArrayList();
+            ObservableList<Takenote> categories = FXCollections.observableArrayList();
 
             while (resultSet.next()) {
-                int categoryId = resultSet.getInt("id");
-                String categoryName = resultSet.getString("category_name");
-                Date createdDate = resultSet.getDate("created_date");
-                Categories category = new Categories(categoryId, categoryName, createdDate);
-                categories.add(category);
+                String title = resultSet.getString("title");
+                String content = resultSet.getString("content");
+                Takenote notes = new Takenote(title,content);
+                categories.add(notes);
             }
 
             categorytab.setItems(categories);
