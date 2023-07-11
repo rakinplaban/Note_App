@@ -25,6 +25,13 @@ public class ViewCategories {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+    private User authenticatedUser;
+
+    public void setAuthenticatedUser(User user) {
+        authenticatedUser = user;
+    }
+
     @FXML
     private TableView<Takenote> categorytab;
 
@@ -53,9 +60,10 @@ public class ViewCategories {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url,user,pass);
 
-            String sql = "SELECT title,content FROM note where user_id = 1";
+            String sql = "SELECT title,content FROM note where user_id = ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, authenticatedUser.getId());
             ResultSet resultSet = statement.executeQuery();
             ObservableList<Takenote> categories = FXCollections.observableArrayList();
 
@@ -87,7 +95,7 @@ public class ViewCategories {
             // Access the controller of the login.fxml file and pass the primaryStage reference
             Takenote notepage = loader.getController();
             notepage.setPrimaryStage(primaryStage);
-
+            notepage.setAuthenticatedUser(authenticatedUser);
             primaryStage.setScene(loginScene);
         } catch (IOException e) {
             e.printStackTrace();

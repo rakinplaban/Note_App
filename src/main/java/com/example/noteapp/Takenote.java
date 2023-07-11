@@ -133,7 +133,8 @@ public class Takenote {
 
                 ViewCategories noteviewController = notelistLoader.getController();
                 noteviewController.setPrimaryStage(primaryStage);
-//                noteviewController.setAuthenticatedUser(auth_user);
+                noteviewController.setAuthenticatedUser(authenticatedUser);
+                noteviewController.viewCategories();
                 primaryStage.setScene(listScene);
 
             } else {
