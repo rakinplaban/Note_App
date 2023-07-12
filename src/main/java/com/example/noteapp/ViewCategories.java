@@ -3,6 +3,7 @@ package com.example.noteapp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -99,6 +100,32 @@ public class ViewCategories {
             primaryStage.setScene(loginScene);
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("401","Page not found");
         }
+    }
+
+    @FXML
+    protected void createCategory() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("categories.fxml"));
+            AnchorPane categoryLayout = loader.load();
+            Scene loginScene = new Scene(categoryLayout);
+
+            // Access the controller of the login.fxml file and pass the primaryStage reference
+            Categories categoriesController = loader.getController();
+            categoriesController.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(loginScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
