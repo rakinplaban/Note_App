@@ -22,6 +22,10 @@ public class Categories {
     private int id;
     private String category_name;
     private Date created_date;
+    private User authenticatedUser;
+    public void setAuthenticatedUser(User user) {
+        authenticatedUser = user;
+    }
 
     public int getId() {
         return id;
@@ -54,7 +58,7 @@ public class Categories {
 //        this.category_name = category_name;
 //    }
     @FXML
-    private TextField categoryid;
+    private TextField categoryname;
 
     @FXML
     private Button createbtn;
@@ -74,15 +78,17 @@ public class Categories {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url,user,pass);
-            String sql = "insert into category(category_name) values (?)";
+            String sql = "INSERT INTO category(category_name, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
-            String cat = categoryid.getText();
-            statement.setString(1, cat);
+            statement.setString(1, categoryname.getText());
+            statement.setInt(2, authenticatedUser.getId());
             statement.executeUpdate();
 
             showAlert("Created Successful", "201 created!");
         }catch(Exception e){
             System.out.println("Connection failed.");
+            e.printStackTrace();
+            showAlert("Error 501", "Internal Error Occured!");
         }
     }
 
