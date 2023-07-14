@@ -114,7 +114,7 @@ public class ViewCategories {
             // Access the controller of the login.fxml file and pass the primaryStage reference
             Categories categoriesController = loader.getController();
             categoriesController.setPrimaryStage(primaryStage);
-
+            categoriesController.setAuthenticatedUser(authenticatedUser);
             primaryStage.setScene(loginScene);
         } catch (IOException e) {
             e.printStackTrace();

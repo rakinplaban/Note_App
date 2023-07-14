@@ -78,7 +78,7 @@ public class Categories {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url,user,pass);
-            String sql = "insert into category(category_name, user_id) values (?,?)";
+            String sql = "INSERT INTO category(category_name, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, categoryname.getText());
             statement.setInt(2, authenticatedUser.getId());
